@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: cpustress-template
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: cpustress
+  spec:
+    replicas: 1
+    selector:
+      name: cpustress
+    template:
+      metadata:
+        labels:
+          name: cpustress
+      spec:
+        containers:
+        - name: cpustress
+          image: index.docker.io/jfchevrette/centos7-openssl:latest
+          command: ["/bin/sh"]
+          args: ["-c", "sleep infinity"]
+          resources:
+            limits:
+              cpu: '${cpulimit}'
+            requests:
+              cpu: '${cpurequest}'
+parameters:
+- description: CPU stress test's CPU limit
+  name: cpulimit
+  value: '0'
+- description: CPU stress test's CPU request
+  name: cpurequest
+  value: '0'
