@@ -1,10 +1,10 @@
 #!/bin/bash
 
-command="openssl speed rsa4096"
+command="sysbench cpu --cpu-max-prime=100000 --max-time=10 run | grep total | awk '{print \$NF}' | sed -e 's/s//g' | tr '\n' ','; echo"
 count="10"
 
 echo "Benchmark command: $command"
 echo "Running $count iterations."
 
-echo "sign/s,verify/s"
-oc rsh -t dc/cpustress /bin/sh -c "for i in \$(seq $count); do $command 2>&1 | tail -n1 | awk '{printf \"%s,%s\\n\", \$6, \$7}'; done"
+echo "time(s),events"
+oc rsh -t dc/cpustress /bin/sh -c "for i in \$(seq $count); do $command; done"

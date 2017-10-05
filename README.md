@@ -1,8 +1,6 @@
 ## What this test does
 
-This test is used to validate CPU limits on an OpenShift cluster. The test is a very 
-
-and logs any warning that is logged in the OpenShift events.
+This test is used to validate CPU limits on an OpenShift cluster. The test is a very basic test that uses sysbench's prime numbers test to show how many it can generate in 10 seconds.
 
 ## How to run it
 
